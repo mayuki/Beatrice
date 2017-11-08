@@ -1,0 +1,66 @@
+﻿body {
+    padding-top: 54px;
+    padding-bottom: 20px;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.navbar {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+.navbar-collapse {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.navbar-inverse {
+    background-color: #936645;
+    border-bottom: #734c31 4px solid;
+}
+    .navbar-inverse .navbar-brand {
+        font-weight: bold;
+        color: #fff;
+    }
+    .navbar-inverse .navbar-nav > li > a {
+        color: #e6ccad;
+    }
+    .navbar-inverse .navbar-toggle {
+        border-color: transparent;
+    }
+        .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+            background-color: #825b3e;
+        }
+    .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+        border-color: #734c31;
+    }

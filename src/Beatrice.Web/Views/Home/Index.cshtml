@@ -1,0 +1,42 @@
+﻿@model Beatrice.Web.ViewModels.Home.HomeIndexViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+<div class="page-header">
+  <h1>My Devices <small>(@Model.DeviceById.Count devices)</small></h1>
+
+    <div class="text-right">
+        <a class="btn btn-success" asp-action="Resync">Resync</a>
+    </div>
+</div>
+
+@foreach (var devices in Model.DeviceById.Values.Buffer(2))
+{
+    <div class="row">
+        @foreach (var device in devices)
+        {
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">💡 @device.Definition.Name (@device.Definition.Id)</div>
+                    <div class="panel-body">
+                        @if (device.Definition.Nicknames != null)
+                        {
+                            <p>Nicknames: @String.Join(", ", device.Definition.Nicknames)</p>
+                        }
+                        @foreach (var feature in device.Definition.Features)
+                        {
+                            <p>📝 @feature.Feature</p>
+                        }
+
+                        @foreach (var trait in device.Traits)
+                        {
+                            <div class="panel panel-default">
+                                <div class="panel-heading">🔌 @trait</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
