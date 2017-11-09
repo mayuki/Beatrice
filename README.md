@@ -59,10 +59,68 @@ And You **MUST** consider and configure carefully. If the configuration has some
 - **WebHookOnOff**: Invoke WebHook when switching On/Off.
 - **ProcessExecuteOnOff**: Execute external process when switching On/Off.
 
-## Device configuration examples
+## How to configure/define virtual devices
+Virtual devices on Beatrice are defined at **Beatrice:DeviceConfiguration:Devices** section in **appsettings.Beatrice.json**. You can add or remove your devices from there as you like.
 
-### Invoke WebHook
-Say `"OK Google. Turn on 'NantokaKantoka'"` (`"OK Google, 'NantokaKantoka'をつけて"`) to Google Assistant or Google Home. Then Beatrice will invoke WebHook on "http://www.example.com/on".
+```json
+{
+  "Beatrice": {
+    "DeviceConfiguration": {
+      "Devices": [
+        ...
+      ]
+    }
+  }
+}
+```
+
+A format of device definition in **Devices** section is below.
+
+```json
+{
+  "Type": "action.devices.types.OUTLET",
+  "Id": "Excel:1",
+  "Name": "Excel",
+  "Nicknames": [ "エクセル" ],
+  "Features": [
+    {
+      "Feature": "Beatrice.Device.Features.ExternalProcessOnOff",
+      "Options": {
+        "On": {
+          "Executable": "C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE",
+          "Arguments": "",
+          "WaitForExit": false
+        },
+        "Off": {
+          "Executable": "taskkill",
+          "Arguments": "/f /im excel.exe",
+          "WaitForExit": false
+        }
+      }
+    }
+  ]
+}
+```
+
+Each a device definition must have some properties.
+
+- **Type**(string): [A device type of Actions on Google.](https://developers.google.com/actions/smarthome/guides/)
+    - `action.devices.types.LIGHT`: The device behaves as a light.
+    - `action.devices.types.OUTLET`: The device behaves as a outlet.
+    - `action.devices.types.SWITCH`: The device behaves as a switch.
+- **Id**(string): A device identifier(any string). It must be unique on all devices.
+- **Name**(string): A device name. It is displayed on/recognized by Google Assistant and must be unique on all devices.
+- **Features**(Features[]): List of features of a device. The device has one or more Beatrice's features.
+  - Feature has one or more Trait and you should match implemented Traits by Type. [A device type has some recommended Traits](https://developers.google.com/actions/smarthome/guides/).
+
+Some devices can have optional properties if needed.
+
+- **Nicknames**(string[]): Aliases of a device. If the device has any nicknames, You call one of the nicknames, and Google Assistant can recognize it.
+
+### Feature: Invoke a WebHook
+`Beatrice.Device.Features.WebHookOnOff` Feature enables you can invoke WebHook when switching on/off via Google Assistant.
+
+Say `"OK Google. Turn on 'NantokaKantoka'"` (`"OK Google, 'NantokaKantoka'をつけて"`) to Google Assistant or Google Home. Then Beatrice will invoke a WebHook on "http://www.example.com/on".
 
 ```json
 {
@@ -87,7 +145,16 @@ Say `"OK Google. Turn on 'NantokaKantoka'"` (`"OK Google, 'NantokaKantoka'をつ
 }
 ```
 
-### Execute Process
+- **Options:On**: Invocation options when a device turns on.
+- **Options:Off**: Invocation options when a device turns off.
+  - **Url**: WebHook URL
+  - **Body**: POST body
+  - **ContentType**: `Content-Type` (optional. Default=`application/json`)
+
+
+### Feature: Execute a process
+`Beatrice.Device.Features.ExternalProcessOnOff` Feature enables you can execute an external process (e.g. shell script, exe, etc...) when switching on/off via Google Assistant.
+
 Say `"OK Google. Turn on 'Excel'"` (`"OK Google, 'エクセル'をつけて"`) to Google Assistant or Google Home. Then Beatrice will launch Microsoft Excel.
 And Say `"OK Google. Turn off 'Excel'"` (`"OK Google, 'エクセル'を消して"`), will kill Excel process.
 
@@ -114,7 +181,7 @@ And Say `"OK Google. Turn off 'Excel'"` (`"OK Google, 'エクセル'を消して
       }
     }
   ]
-},
+}
 ```
 
 ## TODO
