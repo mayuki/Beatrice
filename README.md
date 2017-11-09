@@ -1,5 +1,5 @@
 # Beatrice
-Smart home service for personal use works with Google Assistant/Google Home.
+**This project is work in progress.**
 
 Beatrice enables to control your home device or virtual devices (Process, WebHook, IRKit ...) via Google Assistant/Google Home. This relationship is also similar to [Homebridge](https://github.com/nfarina/homebridge) and HomeKit.
 
