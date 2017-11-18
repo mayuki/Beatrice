@@ -6,6 +6,7 @@ appsettings.[Bb]eatrice.json
 action.json
 creds.data
 gactions.exe
+*.pubxml
 
 # User-specific files
 *.suo
